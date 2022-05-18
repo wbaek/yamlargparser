@@ -36,10 +36,9 @@ from yamlargparser import ArgumentParser
 parser = ArgumentParser(conflict_handler='resolve')
 parser.add_argument('--added', type=str, default='NOT_EXIST_CONFIG', help='ADDED_FROM_ARGPARSER')
 parser.add_argument('--dump', type=str, default=None, help='config dump filepath')
-parsed_args = parser.parse_args()
-print(parsed_args)
 
-options = parser.parse_args(return_dict=True)
+parsed_args, options = parser.parse_args(return_dict=True)
+print(parsed_args)
 print(options)
 ```
 

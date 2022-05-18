@@ -22,9 +22,31 @@ def test_parser(datafiles):
     assert options.foo == 'test'
     assert options.bar == 1234
 
-    options = parser.parse_args(['-c', filenames[0]], return_dict=True)
+    flags, options = parser.parse_args(['-c', filenames[0]], return_dict=True)
     assert options['foo'] == 'test'
     assert options['bar'] == 1234
+
+
+@pytest.mark.filterwarnings("ignore:MarkInfo")
+@pytest.mark.datafiles(
+    os.path.join(FIXTURE_DIR, 'arguments.yaml')
+)
+def test_parser(datafiles):
+    filenames = [str(f) for f in datafiles.listdir()]
+    parser = ArgumentParser()
+    parser.add_argument('--add', type=str, default='add')
+    options = parser.parse_args(['-c', filenames[0]])
+    # args = parser.parse_args(args=['-c', filenames[0]])
+
+    assert options.foo == 'test'
+    assert options.bar == 1234
+    assert options.add == 'add'
+
+    flags, options = parser.parse_args(['-c', filenames[0]], return_dict=True)
+    assert options['foo'] == 'test'
+    assert options['bar'] == 1234
+    assert flags.add == 'add'
+
 
 @pytest.mark.filterwarnings("ignore:MarkInfo")
 @pytest.mark.datafiles(
@@ -37,7 +59,7 @@ def test_parser_update(datafiles):
     assert options.foo == 'value'
     assert options.bar == 1234
 
-    options = parser.parse_args(args=['-c', filenames[0]] + ['--foo', 'value'], return_dict=True)
+    flags, options = parser.parse_args(args=['-c', filenames[0]] + ['--foo', 'value'], return_dict=True)
     assert options['foo'] == 'value'
     assert options['bar'] == 1234
 
@@ -52,13 +74,13 @@ def test_arguments_boolean(datafiles):
     args = parser.parse_args(args=['-c', filenames[0], '--var', 'true'])
     assert args.var == True
 
-    args = parser.parse_args(args=['-c', filenames[0], '--var', 'true'], return_dict=True)
+    flags, args = parser.parse_args(args=['-c', filenames[0], '--var', 'true'], return_dict=True)
     assert args['var'] == True
 
     parser = ArgumentParser()
     args = parser.parse_args(args=['-c', filenames[0], '--var', 'false'])
 
-    args = parser.parse_args(args=['-c', filenames[0], '--var', 'no'], return_dict=True)
+    flags, args = parser.parse_args(args=['-c', filenames[0], '--var', 'no'], return_dict=True)
     assert args['var'] == False
 
 

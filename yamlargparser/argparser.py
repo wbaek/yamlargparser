@@ -64,4 +64,4 @@ class ArgumentParser(argparse.ArgumentParser):
             return parsed_args
 
         self._update([], options, parsed_args)
-        return options
+        return parsed_args, options
