@@ -17,7 +17,7 @@ setup(
     packages=find_packages(),
     # auto generated:
     name='yamlargparser',
-    version='0.0.1',
+    version='0.0.2',
     description='',
     keywords=['yaml', 'ArgumentParser', 'yamlargparser'],
     author='clint',

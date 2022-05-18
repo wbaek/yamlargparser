@@ -1,6 +1,6 @@
 import logging
 import argparse
-import distutils
+import distutils.util
 import yaml
 
 
